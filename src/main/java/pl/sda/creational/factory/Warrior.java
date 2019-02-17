@@ -5,13 +5,17 @@ public class Warrior {
     private int lvl;
     private Profession profession;
     private Weapon weapon;
+    private WeaponFactory weaponFactory;
 
     public Warrior(String nickname, int lvl, Profession profession) {
         this.nickname = nickname;
         this.lvl = lvl;
-        this.profession = profession;
+        weaponFactory = new WeaponFactory();
+        changeProfession(profession);
     }
 
     public void changeProfession(Profession newProfession) {
+        profession = newProfession;
+        weapon = weaponFactory.create(profession, 80);
     }
 }

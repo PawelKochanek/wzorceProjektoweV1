@@ -1,4 +1,5 @@
 package pl.sda.behavioral.command;
 
-public interface BangCommand {
+public interface BankCommand {
+    void execute();
 }

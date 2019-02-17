@@ -1,4 +1,5 @@
 package pl.sda.behavioral.command;
 
-public interface UndoableBankCommand {
+public interface UndoableBankCommand extends BankCommand {
+    void undo();
 }

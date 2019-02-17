@@ -1,5 +1,7 @@
 package pl.sda.creational.builder;
 
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+
 import java.time.LocalDate;
 
 public class Customer {
@@ -11,14 +13,14 @@ public class Customer {
     private String city;
     private String country;
 
-    public Customer(String name, String lastName, LocalDate birthDate, String pesel, String profession, String city, String country) {
+    private Customer(String name, String lastName) {
         this.name = name;
         this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.pesel = pesel;
-        this.profession = profession;
-        this.city = city;
-        this.country = country;
+    }
+
+    public static Customer createWithDefaults() {
+        return new Customer("John", "Smith");
+
     }
 
     public String getName() {
@@ -47,5 +49,43 @@ public class Customer {
 
     public String getCountry() {
         return country;
+    }
+
+    public static class Builder {
+        private Customer customer;
+
+        public Builder(String name, String lastName) {
+            customer = new Customer(name, lastName);
+        }
+
+        public Builder bornAt(LocalDate birthDate) {
+            customer.birthDate = birthDate;
+            return this;
+        }
+
+        public Builder withPesel(String pesel) {
+            Regex regex = new Regex("\\d{11}");
+            customer.pesel = pesel;
+            return this;
+        }
+
+        public Builder workingAs(String profession) {
+            customer.profession = profession;
+            return this;
+        }
+
+        public Builder livesIn(String city) {
+            customer.city = city;
+            return this;
+        }
+
+        public Builder setCountry(String country) {
+            customer.country = country;
+            return this;
+        }
+
+        public Customer build() {
+            return customer;
+        }
     }
 }
